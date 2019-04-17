@@ -11,6 +11,7 @@ interface Asset {
 interface InstallationParameters {
 	cloudName: string;
 	apiKey: string;
+	extensionId: string;
 }
 
 interface ModalInvocationParameters {
@@ -19,7 +20,6 @@ interface ModalInvocationParameters {
 
 function initFieldExtension(extension: FieldExtensionSDK) {
 	extension.window.startAutoResizer();
-	console.log('extension.parameters', extension.parameters);
 
 	const installationParameters = extension.parameters.installation as InstallationParameters;
 
@@ -66,7 +66,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 	async function openModal(parameters: any): Promise<void> {
 		const asset = await extension.dialogs.openExtension({
-			id: 'cf-cloudinary',
+			id: installationParameters.extensionId,
 			width: 2400,
 			title: 'Select Cloudinary Asset',
 			parameters: {
@@ -103,8 +103,6 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 		type: invocationParameters.fieldValue.type,
 		public_id: invocationParameters.fieldValue.public_id,
 	} : null;
-
-	console.log('asset', asset);
 
 	const options = {
 		cloud_name: String(installationParameters.cloudName),
