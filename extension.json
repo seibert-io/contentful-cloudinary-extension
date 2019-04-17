@@ -1,0 +1,26 @@
+{
+	"id": "cloudinary",
+	"name": "Cloudinary UI Extension",
+	"src": "https://localhost:9000",
+	"fieldTypes": [
+		"Object"
+	],
+	"parameters": {
+		"installation": [
+			{
+				"id": "cloudName",
+				"name": "Cloudinary Cloud Name",
+				"description": "Set the Cloudinary cloud name for this extension",
+				"type": "Symbol",
+				"required": true
+			},
+			{
+				"id": "apiKey",
+				"name": "Cloudinary API Key",
+				"description": "Set the Cloudinary API key for this extension",
+				"type": "Symbol",
+				"required": true
+			}
+		]
+	}
+}
