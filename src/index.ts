@@ -88,6 +88,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 	deleteButton!.addEventListener('click', clearField);
 }
 
+
 function initDialogExtension(extension: DialogExtensionSDK) {
 	const installationParameters = extension.parameters.installation as InstallationParameters;
 
@@ -119,9 +120,9 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 
 	}
 
-	cloudinary.openMediaLibrary(options, { insertHandler: onAssetSelect });
+	const mediaLibrary = cloudinary.createMediaLibrary(options, { insertHandler: onAssetSelect });
+	mediaLibrary.show({ asset });
 }
-
 
 
 init(async extension => {
