@@ -1,6 +1,8 @@
 import { init, FieldExtensionSDK, DialogExtensionSDK } from 'contentful-ui-extensions-sdk';
 
+
 declare const cloudinary: any;
+
 
 interface Asset {
 	resource_type: string;
@@ -8,15 +10,18 @@ interface Asset {
 	public_id: string;
 }
 
+
 interface InstallationParameters {
 	cloudName: string;
 	apiKey: string;
 	extensionId: string;
 }
 
+
 interface ModalInvocationParameters {
 	fieldValue: Asset | null;
 }
+
 
 function initFieldExtension(extension: FieldExtensionSDK) {
 	extension.window.startAutoResizer();
@@ -79,8 +84,8 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 			await extension.field.setValue(asset);
 			updateFieldContent();
 		}
-
 	}
+
 	updateFieldContent();
 
 	createButton!.addEventListener('click', openModal);
@@ -100,9 +105,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 	const invocationParameters: ModalInvocationParameters = extension.parameters.invocation as ModalInvocationParameters;
 
 	const asset = invocationParameters.fieldValue ? {
-		resource_type: invocationParameters.fieldValue.resource_type,
-		type: invocationParameters.fieldValue.type,
-		public_id: invocationParameters.fieldValue.public_id,
+		resource_id: `${invocationParameters.fieldValue.resource_type}/${invocationParameters.fieldValue.type}/${invocationParameters.fieldValue.public_id}`,
 	} : null;
 
 	const options = {
@@ -117,10 +120,10 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 	function onAssetSelect(data: any): void {
 		const selectedAsset: any = data.assets[0];
 		extension.close(selectedAsset);
-
 	}
 
 	const mediaLibrary = cloudinary.createMediaLibrary(options, { insertHandler: onAssetSelect });
+	
 	mediaLibrary.show({ asset });
 }
 
