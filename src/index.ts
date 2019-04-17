@@ -19,6 +19,7 @@ interface ModalInvocationParameters {
 
 function initFieldExtension(extension: FieldExtensionSDK) {
 	extension.window.startAutoResizer();
+	console.log('extension.parameters.installation', extension.parameters.installation);
 
 	const installationParameters = extension.parameters.installation as InstallationParameters;
 
