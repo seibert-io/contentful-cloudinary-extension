@@ -118,7 +118,6 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 		extension.close(selectedAsset);
 
 	}
-	console.log(extension.parameters);
 
 	cloudinary.openMediaLibrary(options, { insertHandler: onAssetSelect });
 }
