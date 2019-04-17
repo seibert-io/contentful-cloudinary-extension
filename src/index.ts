@@ -66,7 +66,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 	async function openModal(parameters: any): Promise<void> {
 		const asset = await extension.dialogs.openExtension({
-			id: 'cloudinary',
+			id: 'cf-cloudinary',
 			width: 2400,
 			title: 'Select Cloudinary Asset',
 			parameters: {
