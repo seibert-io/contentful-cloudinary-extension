@@ -1,6 +1,6 @@
 {
 	"id": "cf-cloudinary",
-	"name": "Cloudinary UI Extension",
+	"name": "Cloudinary Library Picker",
 	"src": "https://seibert-io.github.io/contentful-cloudinary-extension/dist/",
 	"fieldTypes": [
 		"Object"
