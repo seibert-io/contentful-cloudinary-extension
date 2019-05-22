@@ -42,8 +42,13 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 		container.innerHTML = '';
 
 		if (asset) {
+			console.log(asset)
 			const img: HTMLImageElement = document.createElement('img');
-			img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/image/${asset.type}/h_250/${asset.public_id}`;
+			if (asset.derived && asset.derived.length > 0) {
+				img.src = asset.derived[0].secure_url;
+			} else {
+				img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/image/${asset.type}/h_250/${asset.public_id}`;
+			}
 			img.height = 250;
 			img.addEventListener('click', openModal);
 			container.appendChild(img);
@@ -110,6 +115,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 	let transformation: any = null;
 	
 	if (fieldValue) {
+		console.log(fieldValue);
 		asset = {
 			resource_id: `${fieldValue.resource_type}/${fieldValue.type}/${fieldValue.public_id}`,
 		};
