@@ -6,6 +6,7 @@ declare const cloudinary: any;
 
 interface Asset {
 	resource_type: string;
+	derived: Record<string, any>[];
 	type: string;
 	public_id: string;
 }
@@ -103,10 +104,23 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 	extension.window.startAutoResizer();
 
 	const invocationParameters: ModalInvocationParameters = extension.parameters.invocation as ModalInvocationParameters;
+	const fieldValue: Asset | null = invocationParameters.fieldValue;
 
-	const asset = invocationParameters.fieldValue ? {
-		resource_id: `${invocationParameters.fieldValue.resource_type}/${invocationParameters.fieldValue.type}/${invocationParameters.fieldValue.public_id}`,
-	} : null;
+	let asset: any = null;
+	let transformation: any = null;
+	
+	if (fieldValue) {
+		asset = {
+			resource_id: `${fieldValue.resource_type}/${fieldValue.type}/${fieldValue.public_id}`,
+		};
+	}
+	
+	
+	if (fieldValue && fieldValue.derived && fieldValue.derived.length > 0) {
+		transformation = {
+			url: fieldValue.derived[0].url
+		};
+	};
 
 	const options = {
 		cloud_name: String(installationParameters.cloudName),
@@ -115,6 +129,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 		remove_header: true,
 		inline_container: document.querySelector('#dialog'),
 		asset,
+		transformation
 	};
 
 	function onAssetSelect(data: any): void {
