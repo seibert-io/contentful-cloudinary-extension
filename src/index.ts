@@ -38,19 +38,25 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 	function updateFieldContent(): void {
 		const asset: Asset | null = extension.field.getValue();
-
 		const container = document.querySelector('#asset') as HTMLElement;
 		container.innerHTML = '';
 
 		if (asset) {
 			const img: HTMLImageElement = document.createElement('img');
-			if (asset.derived && asset.derived.length > 0) {
-				img.src = asset.derived[0].secure_url;
-			} else {
-				img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/image/${asset.type}/h_250/${asset.public_id}`;
+
+			if (asset.resource_type === 'image') {
+				if (asset.derived && asset.derived.length > 0) {
+					img.src = asset.derived[0].secure_url;
+				} else {
+					img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/image/${asset.type}/h_250/${asset.public_id}`;
+				}
+				img.title = `Image: ${asset.public_id}`
+			} else if (asset.resource_type === 'video') {
+				img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/video/${asset.type}/so_auto,h_250/${asset.public_id}.jpg`;
+				img.title = `Video: ${asset.public_id}`
 			}
 			//img.style.maxHeight = '250px';
-			img.width = 300;
+			img.height = 250;
 			img.addEventListener('click', openModal);
 			container.appendChild(img);
 			extension.window.updateHeight();
