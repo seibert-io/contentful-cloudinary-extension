@@ -38,7 +38,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 	function updateFieldContent(): void {
 		const asset: Asset | null = extension.field.getValue();
-		console.log(asset);
+
 		const container = document.querySelector('#asset') as HTMLElement;
 		container.innerHTML = '';
 
