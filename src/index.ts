@@ -151,7 +151,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 			resource_id: `${fieldValue.resource_type}/${fieldValue.type}/${fieldValue.public_id}`,
 		};
 	}
-	
+	console.log('mediaLibrary.show', showConfig);
 	mediaLibrary.show(showConfig);
 }
 
