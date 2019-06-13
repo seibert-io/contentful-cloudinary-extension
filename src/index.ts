@@ -15,7 +15,6 @@ interface Asset {
 interface InstallationParameters {
 	cloudName: string;
 	apiKey: string;
-	extensionId: string;
 }
 
 
@@ -42,7 +41,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 	function onAssetSelect(data: any): void {
 		const selectedAsset: any = data.assets[0];
-		
+
 		if (dialogExtension) {
 			dialogExtension.close(selectedAsset);
 			dialogExtension = undefined;
@@ -106,7 +105,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 	async function openModal(parameters: any): Promise<void> {
 		const asset = await extension.dialogs.openExtension({
-			id: installationParameters.extensionId,
+			id: extension.ids.extension,
 			width: 2400,
 			title: 'Select Cloudinary Asset',
 			parameters: {
@@ -131,7 +130,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 function initDialogExtension(extension: DialogExtensionSDK) {
 	dialogExtension = extension;
-
+	extension.
 	(document.querySelector('#field') as HTMLElement).style.display = 'none';
 	(document.querySelector('#dialog') as HTMLElement)!.style.height = '700px';
 

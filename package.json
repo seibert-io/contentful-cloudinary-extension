@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@types/webpack-env": "^1.13.9",
-    "contentful-ui-extensions-sdk": "^3.7.2",
+    "contentful-ui-extensions-sdk": "^3.8.0",
     "dotenv": "^7.0.0"
   }
 }
