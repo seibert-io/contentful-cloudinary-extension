@@ -24,10 +24,32 @@ interface ModalInvocationParameters {
 }
 
 
+let dialogExtension: DialogExtensionSDK | undefined;
+let mediaLibrary: any;
+
 function initFieldExtension(extension: FieldExtensionSDK) {
 	extension.window.startAutoResizer();
-
+	// create media library
 	const installationParameters = extension.parameters.installation as InstallationParameters;
+
+	const mediaLibaryOptions = {
+		cloud_name: String(installationParameters.cloudName),
+		api_key: String(installationParameters.apiKey),
+		multiple: false,
+		remove_header: true,
+		inline_container: document.querySelector('#dialog'),
+	};
+
+	function onAssetSelect(data: any): void {
+		const selectedAsset: any = data.assets[0];
+		
+		if (dialogExtension) {
+			dialogExtension.close(selectedAsset);
+			dialogExtension = undefined;
+		}
+	}
+	
+	mediaLibrary = cloudinary.createMediaLibrary(mediaLibaryOptions, { insertHandler: onAssetSelect });
 
 	(document.querySelector('#dialog') as HTMLElement).style.display = 'none';
 
@@ -108,7 +130,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 
 function initDialogExtension(extension: DialogExtensionSDK) {
-	const installationParameters = extension.parameters.installation as InstallationParameters;
+	dialogExtension = extension;
 
 	(document.querySelector('#field') as HTMLElement).style.display = 'none';
 	(document.querySelector('#dialog') as HTMLElement)!.style.height = '700px';
@@ -130,20 +152,6 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 			resource_id: `${fieldValue.resource_type}/${fieldValue.type}/${fieldValue.public_id}`,
 		};
 	}
-
-	const options = {
-		cloud_name: String(installationParameters.cloudName),
-		api_key: String(installationParameters.apiKey),
-		multiple: false,
-		remove_header: true,
-		inline_container: document.querySelector('#dialog'),
-	};
-	function onAssetSelect(data: any): void {
-		const selectedAsset: any = data.assets[0];
-		extension.close(selectedAsset);
-	}
-	
-	const mediaLibrary = cloudinary.createMediaLibrary(options, { insertHandler: onAssetSelect });
 	
 	mediaLibrary.show(showConfig);
 }
