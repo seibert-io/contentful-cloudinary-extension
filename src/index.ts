@@ -130,7 +130,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 function initDialogExtension(extension: DialogExtensionSDK) {
 	dialogExtension = extension;
-	extension.
+
 	(document.querySelector('#field') as HTMLElement).style.display = 'none';
 	(document.querySelector('#dialog') as HTMLElement)!.style.height = '700px';
 
