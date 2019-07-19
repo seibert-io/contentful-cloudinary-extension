@@ -130,6 +130,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 
 	function onAssetSelect(data: any): void {
 		const selectedAsset: any = data.assets[0];
+		console.log('Asset selected:', selectedAsset);
 		extension.close(selectedAsset);
 	}
 	
@@ -145,6 +146,10 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 			resource_id: `${fieldValue.resource_type}/${fieldValue.type}/${fieldValue.public_id}`,
 		};
 	}
+
+	console.log('Show Media Library');
+	console.log('Options:', mediaLibaryOptions);
+	console.log('ShowConfig:', showConfig);
 
 	mediaLibrary.show(showConfig);
 }
