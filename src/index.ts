@@ -95,6 +95,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 		if (asset) {
 			await extension.field.setValue(asset);
+			console.log(asset);
 			updateFieldContent();
 		}
 	}
@@ -130,7 +131,6 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 
 	function onAssetSelect(data: any): void {
 		const selectedAsset: any = data.assets[0];
-		console.log('Data:', JSON.parse(JSON.stringify(data)));
 		extension.close(selectedAsset);
 	}
 	
