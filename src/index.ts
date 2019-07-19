@@ -130,7 +130,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 
 	function onAssetSelect(data: any): void {
 		const selectedAsset: any = data.assets[0];
-		console.log('Asset selected:', selectedAsset);
+		console.log('Data:', {...data});
 		extension.close(selectedAsset);
 	}
 	
