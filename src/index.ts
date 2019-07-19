@@ -48,11 +48,11 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 				if (asset.derived && asset.derived.length > 0) {
 					img.src = asset.derived[0].secure_url;
 				} else {
-					img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/image/${asset.type}/h_250/${asset.public_id}`;
+					img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/image/${asset.type}/h_250/w_500,c_fit/${asset.public_id}`;
 				}
 				img.title = `Image: ${asset.public_id}`
 			} else if (asset.resource_type === 'video') {
-				img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/video/${asset.type}/so_auto,h_250/${asset.public_id}.jpg`;
+				img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/video/${asset.type}/so_auto,h_250/w_500,c_fit/${asset.public_id}.jpg`;
 				img.title = `Video: ${asset.public_id}`
 			}
 			//img.style.maxHeight = '250px';
@@ -130,7 +130,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 
 	function onAssetSelect(data: any): void {
 		const selectedAsset: any = data.assets[0];
-		console.log('Data:', {...data});
+		console.log('Data:', JSON.parse(JSON.stringify(data)));
 		extension.close(selectedAsset);
 	}
 	
