@@ -9,13 +9,13 @@ interface Asset {
 	derived: Record<string, any>[];
 	type: string;
 	public_id: string;
+	secure_url: string;
 }
 
 
 interface InstallationParameters {
 	cloudName: string;
 	apiKey: string;
-	cname?: string;
 }
 
 
@@ -27,8 +27,6 @@ interface ModalInvocationParameters {
 
 function initFieldExtension(extension: FieldExtensionSDK) {
 	extension.window.startAutoResizer();
-
-	const installationParameters = extension.parameters.installation as InstallationParameters;
 
 	(document.querySelector('#dialog') as HTMLElement).style.display = 'none';
 
@@ -44,31 +42,22 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 		if (asset) {
 			const img: HTMLImageElement = document.createElement('img');
-			const cname: string = String(installationParameters.cname || '');
-			let baseUrl: string = `https://res.cloudinary.com/${installationParameters.cloudName}`;
-			
-			if (cname) {
-				baseUrl = `https://${cname}`;
-			}
 
 			if (asset.resource_type === 'image') {
 				if (asset.derived && asset.derived.length > 0) {
 					img.src = asset.derived[0].secure_url;
-					if (cname) {
-						img.src = img.src.replace(`https://res.cloudinary.com/${installationParameters.cloudName}`, baseUrl);
-					}
 				} else {
-					img.src = `${baseUrl}/image/${asset.type}/h_250/w_500,c_fit/${asset.public_id}`;
+					img.src = asset.secure_url.replace(`/image/${asset.type}/`, `/image/${asset.type}/h_250/w_500,c_fit/`);
 				}
 				img.title = `Image: ${asset.public_id}`
 			} else if (asset.resource_type === 'video') {
-				img.src = `${baseUrl}/video/${asset.type}/so_auto,h_250/w_500,c_fit/${asset.public_id}.jpg`;
+				img.src = asset.secure_url.replace(`/video/${asset.type}/`, `/video/${asset.type}/so_auto,h_250/w_500,c_fit/`);
 				img.title = `Video: ${asset.public_id}`
 			}
 
 			
 
-			//img.style.maxHeight = '250px';
+			img.style.maxWidth = '80%';
 			img.height = 250;
 			img.addEventListener('click', openModal);
 			container.appendChild(img);
@@ -154,11 +143,6 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 		showConfig.transformation = {
 			url: fieldValue.derived[0].secure_url
 		};
-
-		const cname: string = String(installationParameters.cname || '');
-		if (cname) {
-			showConfig.transformation.url = showConfig.transformation.url.replace(`https://res.cloudinary.com/${installationParameters.cloudName}`, `https://${cname}`);
-		}
 
 	} else if (fieldValue) {
 		showConfig.asset = {
