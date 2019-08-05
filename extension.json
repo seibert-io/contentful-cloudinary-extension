@@ -20,6 +20,13 @@
 				"description": "Set the Cloudinary API key for this extension",
 				"type": "Symbol",
 				"required": true
+			},
+			{
+				"id": "cname",
+				"name": "Cloudinary CNAME",
+				"description": "Cloudinary CNAME (optional)",
+				"type": "Symbol",
+				"required": false
 			}
 		]
 	}

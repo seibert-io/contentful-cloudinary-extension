@@ -15,6 +15,7 @@ interface Asset {
 interface InstallationParameters {
 	cloudName: string;
 	apiKey: string;
+	cname?: string;
 }
 
 
@@ -55,6 +56,12 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 				img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/video/${asset.type}/so_auto,h_250/w_500,c_fit/${asset.public_id}.jpg`;
 				img.title = `Video: ${asset.public_id}`
 			}
+
+			const cname: string = String(installationParameters.cname || '');
+			if (cname) {
+				img.src = img.src.replace('res.cloudinary.com', cname);
+			}
+
 			//img.style.maxHeight = '250px';
 			img.height = 250;
 			img.addEventListener('click', openModal);
@@ -141,6 +148,12 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 		showConfig.transformation = {
 			url: fieldValue.derived[0].secure_url
 		};
+
+		const cname: string = String(installationParameters.cname || '');
+		if (cname) {
+			showConfig.transformation.url = showConfig.transformation.url.replace('res.cloudinary.com', cname);
+		}
+
 	} else if (fieldValue) {
 		showConfig.asset = {
 			resource_id: `${fieldValue.resource_type}/${fieldValue.type}/${fieldValue.public_id}`,
