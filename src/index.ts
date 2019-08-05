@@ -44,23 +44,26 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 
 		if (asset) {
 			const img: HTMLImageElement = document.createElement('img');
+			const cname: string = String(installationParameters.cname || '');
+			let baseUrl: string = `https://res.cloudinary.com/${installationParameters.cloudName}`;
+			
+			if (cname) {
+				baseUrl = `https://${cname}`;;
+			}
 
 			if (asset.resource_type === 'image') {
 				if (asset.derived && asset.derived.length > 0) {
 					img.src = asset.derived[0].secure_url;
 				} else {
-					img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/image/${asset.type}/h_250/w_500,c_fit/${asset.public_id}`;
+					img.src = `${baseUrl}/image/${asset.type}/h_250/w_500,c_fit/${asset.public_id}`;
 				}
 				img.title = `Image: ${asset.public_id}`
 			} else if (asset.resource_type === 'video') {
-				img.src = `https://res.cloudinary.com/${installationParameters.cloudName}/video/${asset.type}/so_auto,h_250/w_500,c_fit/${asset.public_id}.jpg`;
+				img.src = `${baseUrl}/video/${asset.type}/so_auto,h_250/w_500,c_fit/${asset.public_id}.jpg`;
 				img.title = `Video: ${asset.public_id}`
 			}
 
-			const cname: string = String(installationParameters.cname || '');
-			if (cname) {
-				img.src = img.src.replace('res.cloudinary.com', cname);
-			}
+			
 
 			//img.style.maxHeight = '250px';
 			img.height = 250;
@@ -151,7 +154,7 @@ function initDialogExtension(extension: DialogExtensionSDK) {
 
 		const cname: string = String(installationParameters.cname || '');
 		if (cname) {
-			showConfig.transformation.url = showConfig.transformation.url.replace('res.cloudinary.com', cname);
+			showConfig.transformation.url = showConfig.transformation.url.replace(`https://res.cloudinary.com/${installationParameters.cloudName}`, `https://${cname}`);
 		}
 
 	} else if (fieldValue) {
