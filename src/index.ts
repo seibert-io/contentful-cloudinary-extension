@@ -48,12 +48,15 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 			let baseUrl: string = `https://res.cloudinary.com/${installationParameters.cloudName}`;
 			
 			if (cname) {
-				baseUrl = `https://${cname}`;;
+				baseUrl = `https://${cname}`;
 			}
 
 			if (asset.resource_type === 'image') {
 				if (asset.derived && asset.derived.length > 0) {
 					img.src = asset.derived[0].secure_url;
+					if (cname) {
+						img.src = img.src.replace(`https://res.cloudinary.com/${installationParameters.cloudName}`, baseUrl);
+					}
 				} else {
 					img.src = `${baseUrl}/image/${asset.type}/h_250/w_500,c_fit/${asset.public_id}`;
 				}
