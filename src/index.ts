@@ -58,7 +58,7 @@ function initFieldExtension(extension: FieldExtensionSDK) {
 			
 
 			img.style.maxWidth = '80%';
-			img.height = 250;
+			img.style.maxHeight = '250px';
 			img.addEventListener('click', openModal);
 			container.appendChild(img);
 			extension.window.updateHeight();
